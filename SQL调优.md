@@ -28,7 +28,9 @@ Oracle有高水位的问题，即表插入的字段后删除，数据库水位�
 
 [mysql类似oracle rownum写法](https://www.cnblogs.com/mzq123/p/11470607.html) 
 
-后来，对rownum进行查询，rownum被称为伪行，是动态生成的。但是Oracle有一个ROWID的字段，是一串哈希值，是行对应的物理地址，不能直接进行小于1000的Select。于是先Select这个表前1000行的ROWID，然后使用这一千行的ROWID直接和原表的所有内容和ROWID进行并表查询。最终查询时间从30多分钟缩短到0.3秒
+后来，对rownum进行查询，rownum被称为伪行，是动态生成的。Oracle有一个ROWID的字段，是一串哈希值，是行对应的物理地址，但不能进行直接用rowID获取前1000行记录的操作。。
+
+于是我们先Select这个表前1000行的ROWID，然后使用这一千行的ROWID直接和原表的所有内容和ROWID进行并表查询。最终查询时间从30多分钟缩短到0.3秒
 
 ```sql
 select c.*
